@@ -7,21 +7,43 @@
     <meta name="author" content=" FILL ME IN ">
     <title>Cameron Pitman: Portfolio</title>
 
-    <!-- Hmm, what is the impact of web fonts on speed? Measure it... -->
-    <!-- <link href="//fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet"> -->
+    <!-- Google webfont async load script from google: -->
+      <script>
+    // <! [CDATA [
+      function loadCSS (e, t, n) {
+        "use strict";
+        var i = window.document.createElement ("links");
+        var o = t || window.document.getElementsByTagName("script")[0];
+        i.rel = "stylesheet";
+        i.href = e;
+        i.media = "only x";
+        o.parentNode.insertBefore (i, o);
+        setTimeout (function () {
+          i.media = n || "all"})
+      }
+    loadCSS ("//fonts.googleapis.com/css?family=Open+Sans:400,700");
+    //]]>
+    </script>
 
-    <link href="css/style.min.css" rel="stylesheet">
+    <style>
+    /* inline key css for page render, the rest is non-blocking due to media query */
+      body { background: #fff; margin: 0; font-size: 14px; line-height: 1.61; font-weight: 400; }
+      body, button, input, select, textarea { font-family: 'Open Sans', sans-serif; color: #333; }
+    </style>
+    
+    <link href="css/style.min.css" rel="stylesheet" media="screen">
     <link href="css/print.min.css" rel="stylesheet" media="print">
 
+    <!-- No Analytics needed
     <script>
       (function(w,g){w['GoogleAnalyticsObject']=g;
       w[g]=w[g]||function(){(w[g].q=w[g].q||[]).push(arguments)};w[g].l=1*new Date();})(window,'ga');
 
-      // Optional TODO: replace with your Google Analytics profile ID.
+      // Optional \T\ODO: replace with your Google Analytics profile ID.
       ga('create', 'UA-XXXX-Y');
       ga('send', 'pageview');
     </script>
-    <script async src="http://www.google-analytics.com/analytics.js"></script>
+    <script async src="http://www.google-analytics.com/analytics.js"></script> -->
     <script async src="js/perfmatters.js"></script>
   </head>
 
