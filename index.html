@@ -24,27 +24,11 @@
     loadCSS ("//fonts.googleapis.com/css?family=Open+Sans:400,700");
     //]]>
     </script>
-    <!-- <link href="css/style.min.css" rel="stylesheet"> -->
+    <link href="css/style.min.css" rel="stylesheet" media="screen">
     <link href="css/print.min.css" rel="stylesheet" media="print">
     <style>
-      body { margin: 0; font-size: 14px; line-height: 1.61; font-weight: 400; background: #fff;}
-      body, button, input, select, textarea { color: #333; }
-      header, footer, .container { max-width: 45em; margin: 0 auto; }
-      header { padding: 0 0.5em; color: #C90B0B; }
-      header img { border-radius: 40px; float: left; }
-      header p { font-size:1.5em; font-weight: bold; padding-left: 4em;}
-      header p span { font-size: 0.8em; font-weight: normal;}
-      html {
-        font-size: 100%;
-        overflow-y: scroll;
-        -webkit-tap-highlight-color: rgba(0,0,0,0);
-        -ms-text-size-adjust: 100%;
-        -webkit-text-size-adjust: none;
-      }
-      .hero { padding: 2em; background-color: #f8f8f8; font-size:1.2em;
-        border-bottom: 1px solid #ccc;
-        border-top: 1px solid #ccc;
-      }
+      body { background: #fff; margin: 0; font-size: 14px; line-height: 1.61; font-weight: 400; }
+      body, button, input, select, textarea { font-family: 'Open Sans', sans-serif; color: #333; }
     </style>
 
     <!-- No google analytics needed
@@ -60,7 +44,7 @@
     <script async src="js/perfmatters.js"></script>
   </head>
 
-  <body style="font-family: 'Open Sans', sans-serif">
+  <body>
     <header>
       <a href="/"><img src="img_reduced/profilepic-small-1x.jpg"
         alt="profile photo"
@@ -108,23 +92,6 @@
         <p>&copy; Web Performance 2014 <span id="crp-stats"></span></p>
       </footer>
     </div>
-    <!-- optimized css delivery via google psi reference -->
-    <noscript id="deferred-styles">
-    <link rel="stylesheet" type="text/css" href="css/style.min.css"/>
-    </noscript>
-    <script>
-      var loadDeferredStyles = function() {
-        var addStylesNode = document.getElementById("deferred-styles");
-        var replacement = document.createElement("div");
-        replacement.innerHTML = addStylesNode.textContent;
-        document.body.appendChild(replacement)
-        addStylesNode.parentElement.removeChild(addStylesNode);
-      };
-      var raf = requestAnimationFrame || mozRequestAnimationFrame ||
-          webkitRequestAnimationFrame || msRequestAnimationFrame;
-      if (raf) raf(function() { window.setTimeout(loadDeferredStyles, 0); });
-      else window.addEventListener('load', loadDeferredStyles);
-    </script>
 </body>
   </body>
 </html>
