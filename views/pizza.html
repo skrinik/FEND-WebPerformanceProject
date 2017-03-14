@@ -1,8 +1,8 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-  <link rel="stylesheet" href="css/style.min.css">
-  <link rel="stylesheet" href="css/bootstrap-grid.min.css">
+  <link rel="stylesheet" href="css/style.min.css" media="screen">
+  <link rel="stylesheet" href="css/bootstrap-grid.min.css" media="screen">
 </head>
 
 <body>
@@ -36,7 +36,14 @@
     </div>
     <div id="callToAction" class="row">
       <div class="col-md-4">
-        <img src="images/pizzeria.jpg" class="img-responsive"> <!-- Image credit to: http://commons.wikimedia.org/wiki/File:HK_TST_night_%E5%98%89%E8%98%AD%E9%81%93_Granville_Road_restaurant_Paisano's_Pizzeria_pizza_Dec-2013.JPG -->
+        <picture>
+        <source media="screen and (max-width: 479px)" type="image/jpg"
+                srcset="../img_reduced/pizzeria-small-1x.jpg 1x, ../img_reduced/pizzeria-small-2x.jpg 2x">
+        <source media="screen and (min-width: 480px)" type="image/jpg"
+                srcset="../img_reduced/pizzeria-large-1x.jpg 1x, ../img_reduced/pizzeria-large-2x.jpg 2x">
+        <img class="img-responsive" src="../img_reduced/pizzeria-large-1x.jpg" alt="pizzeria">
+        </picture>
+        <!-- <img src="images/pizzeria.jpg" class="img-responsive">  Image credit to: http://commons.wikimedia.org/wiki/File:HK_TST_night_%E5%98%89%E8%98%AD%E9%81%93_Granville_Road_restaurant_Paisano's_Pizzeria_pizza_Dec-2013.JPG --> -->
       </div>
       <div class="col-md-8">
         <div class="row">

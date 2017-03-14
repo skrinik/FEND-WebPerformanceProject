@@ -6,8 +6,8 @@
     <meta name="description" content=" FILL ME IN ">
     <meta name="author" content=" FILL ME IN ">
     <title>Cameron Pittman: Portfolio</title>
-    <!-- Hmm, what is the impact of web fonts on speed? Measure it... -->
-    <!-- <link href="//fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet"> -->
+
+    <!-- Google webfont async load script from google: -->
       <script>
   // <! [CDATA [
     function loadCSS (e, t, n) {
@@ -24,12 +24,15 @@
     loadCSS ("//fonts.googleapis.com/css?family=Open+Sans:400,700");
     //]]>
     </script>
-    <link href="css/style.min.css" rel="stylesheet" media="screen">
-    <link href="css/print.min.css" rel="stylesheet" media="print">
+
     <style>
+    /* inline key css for page render, the rest is non-blocking due to media query */
       body { background: #fff; margin: 0; font-size: 14px; line-height: 1.61; font-weight: 400; }
       body, button, input, select, textarea { font-family: 'Open Sans', sans-serif; color: #333; }
     </style>
+
+    <link href="css/style.min.css" rel="stylesheet" media="screen">
+    <link href="css/print.min.css" rel="stylesheet" media="print">
 
     <!-- No google analytics needed
       <script>
@@ -82,7 +85,7 @@
                 src="img_reduced/pizzeria-small-1x.jpg"
                 alt="pizzeria photo"
                 srcset="img_reduced/pizzeria-small-1x.jpg 1x, img_reduced/pizzeria-small-2x.jpg 2x">
-            <a href="img/pizza.html">Cam's Pizzeria</a>
+            <a href="views/pizza.html">Cam's Pizzeria</a>
             <p>Who wants a performant pizza?</p>
           </li>
         </ul>
