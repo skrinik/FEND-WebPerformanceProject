@@ -81,8 +81,8 @@ module.exports = function(grunt) {
 
     cssmin: {
         my_target: {
-            src: 'views/css/bootstrap-grid.css',
-            dest: 'views/css/bootstrap-grid.min.css'
+            src: 'css/style.css',
+            dest: 'css/style.min.css'
         }
     }
   });
