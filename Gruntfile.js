@@ -34,19 +34,19 @@ module.exports = function(grunt) {
         {
           name: "large",
           width: 800,
-          quality: 90,
+          quality: 75,
           suffix: "-2x"
         },
       {
         name: "small",
         width: 480,
-        quality: 90,
+        quality: 75,
         suffix: "-2x"
       },
       {
         name: "thumb",
         width: 100,
-        quality: 90,
+        quality: 75,
         suffix: "-2x"
       },]
           },
@@ -67,7 +67,7 @@ module.exports = function(grunt) {
     /* Clear out the images directory if it exists */
     clean: {
       dev: {
-        src: ['img'],
+        src: ['img_reduced'],
       },
     },
 
