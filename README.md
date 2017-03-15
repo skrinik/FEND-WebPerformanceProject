@@ -1,3 +1,60 @@
+# Web Performance & Optimization Project
+## Sean Krinik
+
+### Overview of Optimizations:
+
+#### index.html
+The changes made to index.html are fairly significant. I was stuck with Google PageSpeed Insight (PSI) scores in the 80's for a while unfortunately.
+
+Major changes (in order moving from open html tag to close tag) include:
+
+* Prevented render blocking load of the print stylesheet by adding media query
+* Minified CSS stylesheets
+* Prevented multiple round trips to style.min.css by inlining the code (Google PSI recommendation)
+* Added script to allow asynchronous load for Google Webfonts (from Google & Adobe Typekit)
+* Asynchronous load of `perfmatters.js`
+* Used optimized images through responsive-images grunt task, implemented with `srcset`
+* Inline style sizing of the thumbnail images to further prevent CSS render blocking
+
+A few notes on `index.html`:
+
+* I don't have an Analytics account right now so I left the GA script commented out since it just threw load errors.
+* I debated using loadCSS and/or other async CSS loaders but Google PSI said that all of the css in the stylesheet was necessary for above the fold page load so I inlined the minified CSS. I know this is bad practice in general but doing so pushed me over 90 for PSI scores on mobile & desktop.
+* Please reference `Gruntfile.js` for implementation of cssmin & responsive-images, both tasks were used to create the final version of `index.html`.
+
+#### pizza.html & main.js
+Most of these optimizations were made prior to this project in the previous lessons on optimization and being able to load 60fps web pages. However, I'll list changes below:
+
+`pizza.html`
+
+* Optimized/responsive images using `<picture>`, `source` & `srcset` to deliver the right image.
+* minified stylesheets for easier requests
+
+`main.js`
+
+* `changePizzaSizes` - eliminated forced reflow issues by limiting expensive calls to CSS methods
+* `changePizzaSizes` - created an array of the pizzas and used a forEach/anon function to make changes to the pizzas
+* `updatePositions` - replaced for loop with another forEach loop
+* `updatePositions` - took the variable accessing the scroll position out of the loop to avoid performance bottlenecks
+* `updatePositions` - used a CSS transform (`translateX`) to reduce CSS impact and eliminate forced reflow issues in loop as the pizzas are moved around
+
+A few notes on `main.js`:
+
+* There is still a forced reflow issue upon initial page load when the scroll variable is initialized, but once you scroll, it has no problem with frame rate. Not sure why, maybe browser caching?
+* Pizza load seems to be well under 5ms
+
+### Obstacles
+While doing this project, I had many hurdles (still do, but I was able to achieve the PSI scores needed and get the scroll to be free of jank).
+
+A few Obstacles I faced were:
+* Stuck with PSI score in the 80's due to CSS render blocking. Had to inline a stylesheet to fix.
+* Alternative solution would have been to use async CSS load (loadCSS) or Critical (Grunt task) to recreate html where critical CSS is all inlined. I strayed away for now just due to my experience level.
+* Fixing updatePositions was really hard. I had to refer to the forums a few times to see how others were solving the task of eliminating the jank. One key fix was using `translateX` since transforms are less expensive changes. (Huge shoutout to chocobuckle on forums, lots of great hints and solutions!) 
+
+---
+
+# Udacity Rubric & Info:
+
 ## Website Performance Optimization portfolio project
 
 Your challenge, if you wish to accept it (and we sure hope you will), is to optimize this online portfolio for speed! In particular, optimize the critical rendering path and make this page render as quickly as possible by applying the techniques you've picked up in the [Critical Rendering Path course](https://www.udacity.com/course/ud884).

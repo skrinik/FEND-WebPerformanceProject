@@ -451,6 +451,8 @@ var resizePizzas = function(size) {
   // }
 
   // Iterates through pizza elements on the page and changes their widths
+  // This fix was done in Web Optimization course, eliminates forced reflow issue
+  // and utilizes forEach which seems to be more efficient over classic for loops
   function changePizzaSizes(size) {
     // determine possible percentages:
     var newWidth;
@@ -476,12 +478,11 @@ var resizePizzas = function(size) {
       // from excercise in optimization course.
       pizza.style.width = newWidth + "%";
     });
-
+    // forEach yeilded a slight difference in performance upon function call in timeline
     // for (var i = 0; i < randomPizzas.length; i++) {
     //   randomPizzas[i].style.width = newWidth + "%";
     // }
   }
-
   changePizzaSizes(size);
 
   // User Timing API is awesome
@@ -531,11 +532,16 @@ function updatePositions() {
   var itemsArray = Array.prototype.slice.call(items);
   // Organizes items as objects in an array ^
 
+  // moved scroll variable out of loop, still causes forced reflow error on initial render
+  // for some reason. Not sure if it gets cached after DOM load? 
   var scroll = document.body.scrollTop/1250;
 
   itemsArray.forEach(function(item) {
     // forEach loop with anon function seems to be faster overall than running a for loop.
+    // created new variable for element called 'increment' to replace (i%5) calculation in for loop.
+    // the '+256' calculation just adds a more range for the pizzas as they oscillate.
     var scrollPos = Math.sin(scroll + item.increment) * (item.basicLeft + 256);
+    // use transform to lighten the CSS and painting footprints
     item.style.transform = "translateX(" + scrollPos + "px)";
   });
 
