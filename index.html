@@ -3,17 +3,22 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content=" FILL ME IN ">
-    <meta name="author" content=" FILL ME IN ">
+    <meta name="description" content=" Web Performance Project ">
+    <meta name="author" content=" Sean Krinik ">
     <title>Cameron Pittman: Portfolio</title>
 
-    <!-- <link href="css/style.min.css" rel="stylesheet" media="screen"> -->
+
+    <!-- To prevent render blocking css, I used a media query for the print stylesheet -->
     <link href="css/print.min.css" rel="stylesheet" media="print">
+    <!-- <link href="css/style.min.css" rel="stylesheet" media="screen">
+    The above CSS stylesheet load is commented out because I decided to inline my minified stylesheet
+    for screens. PSI kept telling me to optimize CSS delivery but also noted that all of the content
+    in style.min.css was necessary for CSSOM/DOM load so I decided to load inline rather than async-->
     <style>
     html{font-size:100%;overflow-y:scroll;-webkit-tap-highlight-color:rgba(0,0,0,0);-ms-text-size-adjust:100%;-webkit-text-size-adjust:none}body{background:#fff;margin:0;font-size:14px;line-height:1.61;font-weight:400}body,button,input,select,textarea{font-family:'Open Sans',sans-serif;color:#333}a{color:#12C}a:visited{color:#61C}a:focus{outline:thin dotted}a:hover,a:active{color:#c00;outline:0}b,strong{font-weight:700}pre,code{font-family:monospace,monospace;font-size:1em}ul,ol{margin:1em 0;padding:0 0 0 20px}header,footer,.container{max-width:45em;margin:0 auto}header{padding:0 .5em;color:#C90B0B}header img{border-radius:40px;float:left}header p{font-size:1.5em;font-weight:700;padding-left:4em}header p span{font-size:.8em;font-weight:400}.hero{padding:2em;background-color:#f8f8f8;font-size:1.2em;border-bottom:1px solid #ccc;border-top:1px solid #ccc}.content{padding:1em}.content li{list-style-type:none;font-size:1.1em}li img{float:left;padding-right:1em}li p{font-size:.9em;font-style:italic}footer{padding:0 .5em;border-top:1px solid #ccc}footer span{float:right;font-style:italic}@media only screen and (max-width:480px){body{font-size:12px}header p{padding-left:4.5em}}
     </style>
 
-    <!-- No google analytics needed
+    <!-- No google analytics needed, I don't currently have an account to link.
       <script>
       (function(w,g){w['GoogleAnalyticsObject']=g;
       w[g]=w[g]||function(){(w[g].q=w[g].q||[]).push(arguments)};w[g].l=1*new Date();})(window,'ga');
@@ -23,7 +28,9 @@
       ga('send', 'pageview');
     </script>
     <script async src="http://www.google-analytics.com/analytics.js"></script> -->
-    <!-- Google webfont async load script from google: -->
+
+    <!-- Script to load Google Webfonts asynchronously. Script found on:
+    https://github.com/typekit/webfontloader -->
       <script>
   // <! [CDATA [
     function loadCSS (e, t, n) {
@@ -62,6 +69,7 @@
         <ul>
           <li>
             <img style="width:100px; height:auto" src="https://lh4.ggpht.com/kJEnfqhPvtm4m3EneSZ4fWYGS8lW4YNhEjk6zPkyrQaBUHc-2Y_ElDic99NHI0h-UBLXVbRCjFybFvrWxdk=s100">
+            <!-- inline style sizing to prevent issues with CSS optimization -->
             <a href="project-2048.html">Build Your Own 2048!</a>
             <p>I made my own version of 2048. How cool is that!?</p>
           </li>
@@ -94,5 +102,4 @@
       </footer>
     </div>
 </body>
-  </body>
 </html>
