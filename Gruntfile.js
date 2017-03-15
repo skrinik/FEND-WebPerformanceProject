@@ -26,6 +26,12 @@ module.exports = function(grunt) {
           suffix: "-1x"
         },
         {
+          name: "thumb",
+          width: 100,
+          quality: 30,
+          suffix: "-1x"
+        },
+        {
           name: "large",
           width: 800,
           quality: 90,
@@ -36,7 +42,13 @@ module.exports = function(grunt) {
         width: 480,
         quality: 90,
         suffix: "-2x"
-      }]
+      },
+      {
+        name: "thumb",
+        width: 100,
+        quality: 90,
+        suffix: "-2x"
+      },]
           },
 
         /*
@@ -81,8 +93,8 @@ module.exports = function(grunt) {
 
     cssmin: {
         my_target: {
-            src: 'css/style.css',
-            dest: 'css/style.min.css'
+            src: 'views/css/style.css',
+            dest: 'views/css/style.min.css'
         }
     }
   });

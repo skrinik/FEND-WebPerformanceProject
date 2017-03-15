@@ -470,7 +470,7 @@ var resizePizzas = function(size) {
         console.log("bug in sizeSwitcher");
     }
 
-    var randomPizzas = document.querySelectorAll(".randomPizzaContainer"); // all random pizzas
+    var randomPizzas = document.getElementsByClassName("randomPizzaContainer"); // all random pizzas
     var pizzaArray = Array.prototype.slice.call(randomPizzas);
     // Use array prototype method and utlize forEach for better performance when looping through pizzas
 
@@ -495,8 +495,9 @@ var resizePizzas = function(size) {
 window.performance.mark("mark_start_generating"); // collect timing data
 
 // This for-loop actually creates and appends all of the pizzas when the page loads
+var pizzasDiv; // initialize the variable outside of the loop so only one DOM call is needed
 for (var i = 2; i < 100; i++) {
-  var pizzasDiv = document.getElementById("randomPizzas");
+  pizzasDiv = document.getElementById("randomPizzas");
   pizzasDiv.appendChild(pizzaElementGenerator(i));
 }
 
@@ -528,19 +529,18 @@ function updatePositions() {
   frame++;
   window.performance.mark("mark_start_frame");
 
-  var items = document.querySelectorAll('.mover');
+  var items = document.getElementsByClassName('mover'); // replaced `querySelectorAll` since it's inefficient
   var itemsArray = Array.prototype.slice.call(items);
   // Organizes items as objects in an array ^
 
   // moved scroll variable out of loop, still causes forced reflow error on initial render
-  // for some reason. Not sure if it gets cached after DOM load? 
+  // for some reason. Not sure if it gets cached after DOM load?
   var scroll = document.body.scrollTop/1250;
 
   itemsArray.forEach(function(item) {
     // forEach loop with anon function seems to be faster overall than running a for loop.
     // created new variable for element called 'increment' to replace (i%5) calculation in for loop.
-    // the '+256' calculation just adds a more range for the pizzas as they oscillate.
-    var scrollPos = Math.sin(scroll + item.increment) * (item.basicLeft + 256);
+    var scrollPos = Math.sin(scroll + item.increment) * (item.basicLeft + 100);
     // use transform to lighten the CSS and painting footprints
     item.style.transform = "translateX(" + scrollPos + "px)";
   });
@@ -569,9 +569,11 @@ window.addEventListener('scroll', updatePositions);
 
 // Generates the sliding pizzas when the page loads.
 document.addEventListener('DOMContentLoaded', function() {
+  var movingPizzas = document.getElementById("movingPizzas1"); // moved initialization of moving pizza element outside of loop so it only needs to load once in DOM, also replaced `querySelector`
   var cols = 8;
   var s = 256;
-  for (var i = 0; i < 200; i++) {
+  var rowHeight = Math.floor(window.screen.height/s); // creates integer of row height relative to the screen size
+  for (var i = 0; i < rowHeight * cols + 8; i++) { // now only as many pizzas needed to fill the screen will be loaded, the extra 8 is to add one additional row to fill the bottom.
     var elem = document.createElement('img');
     elem.className = 'mover';
     elem.src = "images/pizza.png";
@@ -580,7 +582,7 @@ document.addEventListener('DOMContentLoaded', function() {
     elem.increment = i % 5; //since I use a forEach loop, I need the (i % 5) variable for the calculation
     elem.basicLeft = (i % cols) * s;
     elem.style.top = (Math.floor(i / cols) * s) + 'px';
-    document.querySelector("#movingPizzas1").appendChild(elem);
+    movingPizzas.appendChild(elem);
   }
   updatePositions();
 });
