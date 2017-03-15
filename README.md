@@ -8,6 +8,8 @@ The changes made to index.html are fairly significant. I was stuck with Google P
 
 Major changes (in order moving from open html tag to close tag) include:
 
+* **NEW** further optimized images using new grunt config for responsice images
+* **NEW** images that were previously hosted are now locally stored and served
 * Prevented render blocking load of the print stylesheet by adding media query
 * Minified CSS stylesheets
 * Prevented multiple round trips to style.min.css by inlining the code (Google PSI recommendation)
@@ -18,6 +20,7 @@ Major changes (in order moving from open html tag to close tag) include:
 
 A few notes on `index.html`:
 
+* **UPDATE** As of right now on a shady connection at Denny's, I scored 91 mobile/92 desktop on PSI
 * I don't have an Analytics account right now so I left the GA script commented out since it just threw load errors.
 * I debated using loadCSS and/or other async CSS loaders but Google PSI said that all of the css in the stylesheet was necessary for above the fold page load so I inlined the minified CSS. I know this is bad practice in general but doing so pushed me over 90 for PSI scores on mobile & desktop.
 * Please reference `Gruntfile.js` for implementation of cssmin & responsive-images, both tasks were used to create the final version of `index.html`.
@@ -29,9 +32,14 @@ Most of these optimizations were made prior to this project in the previous less
 
 * Optimized/responsive images using `<picture>`, `source` & `srcset` to deliver the right image.
 * minified stylesheets for easier requests
+* **NEW** Added meta tag for screen scale
 
 `main.js`
 
+* **NEW** Moved initialization of `pizzasDiv` outside of loop & changed inefficient use of `querySelector` to more precise `getElementsByID` within for loop on lines 518-522
+* **NEW** `updatePositions` - ditched `querySelectorAll` and replaced with `getElementsByClassName`
+* **NEW** In pizza initialization loop at the end of the script, I calculated a more reasonable number of pizzas to render using screen height and row calculations based off of the element's height.
+* **NEW** Fixed calculation for moving pizzas - back to 100 instead of 256 (back to normal calculation spec)
 * `changePizzaSizes` - eliminated forced reflow issues by limiting expensive calls to CSS methods
 * `changePizzaSizes` - created an array of the pizzas and used a forEach/anon function to make changes to the pizzas
 * `updatePositions` - replaced for loop with another forEach loop
@@ -49,7 +57,7 @@ While doing this project, I had many hurdles (still do, but I was able to achiev
 A few Obstacles I faced were:
 * Stuck with PSI score in the 80's due to CSS render blocking. Had to inline a stylesheet to fix.
 * Alternative solution would have been to use async CSS load (loadCSS) or Critical (Grunt task) to recreate html where critical CSS is all inlined. I strayed away for now just due to my experience level.
-* Fixing updatePositions was really hard. I had to refer to the forums a few times to see how others were solving the task of eliminating the jank. One key fix was using `translateX` since transforms are less expensive changes. (Huge shoutout to chocobuckle on forums, lots of great hints and solutions!) 
+* Fixing updatePositions was really hard. I had to refer to the forums a few times to see how others were solving the task of eliminating the jank. One key fix was using `translateX` since transforms are less expensive changes. (Huge shoutout to chocobuckle on forums, lots of great hints and solutions!)
 
 ---
 
