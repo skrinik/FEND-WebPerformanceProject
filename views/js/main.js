@@ -515,11 +515,15 @@ var resizePizzas = function(size) {
 window.performance.mark("mark_start_generating"); // collect timing data
 
 // This for-loop actually creates and appends all of the pizzas when the page loads
-var pizzasDiv; // initialize the variable outside of the loop so only one DOM call is needed
+//var pizzasDiv; // initialize the variable outside of the loop so only one DOM call is needed
+
+//** ditched creating a variable when it is not needed, freeing up memory **
 for (var i = 2; i < 100; i++) {
-  pizzasDiv = document.getElementById("randomPizzas");
-  pizzasDiv.appendChild(pizzaElementGenerator(i));
+  //pizzasDiv = document.getElementById("randomPizzas");
+  //no need for pizzasDiv, we can just chain everything together
+  document.getElementById("randomPizzas").appendChild(pizzaElementGenerator(i));
 }
+
 
 // User Timing API again. These measurements tell you how long it took to generate the initial pizzas
 window.performance.mark("mark_end_generating");
@@ -550,29 +554,25 @@ function updatePositions() {
   window.performance.mark("mark_start_frame");
 
   var items = document.getElementsByClassName('mover'); // replaced `querySelectorAll` since it's inefficient
-  var itemsArray = Array.prototype.slice.call(items);
   // Organizes items as objects in an array ^
 
   // moved scroll variable out of loop, still causes forced reflow error on initial render
   // for some reason. Not sure if it gets cached after DOM load?
-  var scroll = document.body.scrollTop / 1250;
 
-  itemsArray.forEach(function(item) {
-    // forEach loop with anon function seems to be faster overall than running a for loop.
-    // created new variable for element called 'increment' to replace (i%5) calculation in for loop.
-    var scrollPos = Math.sin(scroll + item.increment) * (item.basicLeft + 100);
-    // use transform to lighten the CSS and painting footprints
-    item.style.transform = "translateX(" + scrollPos + "px)";
-  });
-
-  // var scrollPos = document.body.scrollTop / 1250;
-  // var phase,
-  //     leftPos;
-  // for (var i = 0; i < items.length; i++) {
-  //   phase = Math.sin(scrollPos + (i % 5));
-  //   leftPos = items[i].basicLeft + 100 * phase;
-  //   items[i].style.transform = "translateX(" + leftPos + "px)";
-  // }
+  // ** Thank you to my reviewer for making me slow down and look at what is actually happening in this calculation **
+  // Key points: there are only 5 states since (i % 5) will yield 0-4. Creating a loop and array to access These
+  // values saves some time since calculations are not being done in the main loop for each item
+  var phase = []; //create empty array of phases
+  for (i = 0; i < 5; i ++) {
+    // create phases using same calculation from original loop. each pizza will have its own sine based oscillation
+    // phase[] will store the states based off of scroll position.
+    phase.push(Math.sin(document.body.scrollTop / 1250 + i) * 100);
+  }
+  
+  for (i = 0; i < items.length; i++){
+    // using left styling for cleaner code even though translate3d is more efficient: (https://jsperf.com/translate3d-vs-xy/5 - most efficient)
+    items[i].style.left = items[i].basicLeft + phase[i%5] + 'px';
+  }
 
   // User Timing API to the rescue again. Seriously, it's worth learning.
   // Super easy to create custom metrics.
@@ -599,7 +599,6 @@ document.addEventListener('DOMContentLoaded', function() {
     elem.src = "images/pizza.png";
     elem.style.height = "100px";
     elem.style.width = "73.333px";
-    elem.increment = i % 5; //since I use a forEach loop, I need the (i % 5) variable for the calculation
     elem.basicLeft = (i % cols) * s;
     elem.style.top = (Math.floor(i / cols) * s) + 'px';
     movingPizzas.appendChild(elem);

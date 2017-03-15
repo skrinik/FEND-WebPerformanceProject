@@ -8,8 +8,8 @@ The changes made to index.html are fairly significant. I was stuck with Google P
 
 Major changes (in order moving from open html tag to close tag) include:
 
-* **NEW** further optimized images using new grunt config for responsice images
-* **NEW** images that were previously hosted are now locally stored and served
+* further optimized images using new grunt config for responsice images
+* images that were previously hosted are now locally stored and served
 * Prevented render blocking load of the print stylesheet by adding media query
 * Minified CSS stylesheets
 * Prevented multiple round trips to style.min.css by inlining the code (Google PSI recommendation)
@@ -20,7 +20,6 @@ Major changes (in order moving from open html tag to close tag) include:
 
 A few notes on `index.html`:
 
-* **UPDATE** As of right now on a shady connection at Denny's, I scored 91 mobile/92 desktop on PSI
 * I don't have an Analytics account right now so I left the GA script commented out since it just threw load errors.
 * I debated using loadCSS and/or other async CSS loaders but Google PSI said that all of the css in the stylesheet was necessary for above the fold page load so I inlined the minified CSS. I know this is bad practice in general but doing so pushed me over 90 for PSI scores on mobile & desktop.
 * Please reference `Gruntfile.js` for implementation of cssmin & responsive-images, both tasks were used to create the final version of `index.html`.
@@ -32,14 +31,16 @@ Most of these optimizations were made prior to this project in the previous less
 
 * Optimized/responsive images using `<picture>`, `source` & `srcset` to deliver the right image.
 * minified stylesheets for easier requests
-* **NEW** Added meta tag for screen scale
+* Added meta tag for screen scale
 
 `main.js`
 
-* **NEW** Moved initialization of `pizzasDiv` outside of loop & changed inefficient use of `querySelector` to more precise `getElementsByID` within for loop on lines 518-522
-* **NEW** `updatePositions` - ditched `querySelectorAll` and replaced with `getElementsByClassName`
-* **NEW** In pizza initialization loop at the end of the script, I calculated a more reasonable number of pizzas to render using screen height and row calculations based off of the element's height.
-* **NEW** Fixed calculation for moving pizzas - back to 100 instead of 256 (back to normal calculation spec)
+* **NEW** `updatePositions`Shoutout to my reviewer - I needed to slow down and actually see what the calculation was doing: I used your suggestions which make total sense. Using a loop to create the phases and just apply them to the `elem.style.left` for each pizza item makes updating the positions easy. Moving the calculations out of a the larger loop saves tons of memory.
+* **NEW** in the for loop where the `pizzasDiv` items were created, it seems much more efficient to get rid of any variable creation and just chain everything together - saves memory. (thank you for the suggestion on this as well!)
+* Moved initialization of `pizzasDiv` outside of loop & changed inefficient use of `querySelector` to more precise `getElementsByID` within for loop on lines 518-522
+* `updatePositions` - ditched `querySelectorAll` and replaced with `getElementsByClassName`
+* In pizza initialization loop at the end of the script, I calculated a more reasonable number of pizzas to render using screen height and row calculations based off of the element's height.
+* Fixed calculation for moving pizzas - back to 100 instead of 256 (back to normal calculation spec)
 * `changePizzaSizes` - eliminated forced reflow issues by limiting expensive calls to CSS methods
 * `changePizzaSizes` - created an array of the pizzas and used a forEach/anon function to make changes to the pizzas
 * `updatePositions` - replaced for loop with another forEach loop
